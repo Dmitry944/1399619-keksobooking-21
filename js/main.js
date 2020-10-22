@@ -1,7 +1,13 @@
 'use strict';
 
 const TIMES = [`12:00`, `13:00`, `14:00`];
-const TYPES = [`palace`, `flat`, `house`, `bungalow`];
+const TYPES = {
+  palace: `Дворец`,
+  flat: `Квартира`,
+  house: `Дом`,
+  bungalow: `Бунгало`
+};
+const TYPES_KEYS = Object.keys(TYPES);
 const TITLES = [`Квартира не дорого`, `Сдам квартиру`, `Аренда квартиры`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 const PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
@@ -31,6 +37,7 @@ function getRandomIntInclusive(minValue, maxValue) {
 
 const map = document.querySelector(`.map`);
 const mapPins = document.querySelector(`.map__pins`);
+const mapFilters = document.querySelector(`.map__filters-container`);
 map.classList.remove(`map--faded`);
 
 function createObject(count) {
@@ -55,7 +62,7 @@ function createObject(count) {
       'title': TITLES[getRandomInt(TITLES.length)],
       'address': ADRESSES[getRandomInt(ADRESSES.length)],
       'price': PRICES[getRandomInt(PRICES.length)],
-      'type': TYPES[getRandomInt(TYPES.length)],
+      'type': TYPES_KEYS[getRandomInt(TYPES_KEYS.length)],
       'rooms': ROOMS[getRandomInt(ROOMS.length)],
       'guests': GUESTS[getRandomInt(GUESTS.length)],
       'checkin': TIMES[getRandomInt(TIMES.length)],
@@ -96,7 +103,6 @@ function createPinElement(offerObject) {
   return pinElement;
 }
 
-
 function appendPins() {
   const offerObject = document.createDocumentFragment();
 
@@ -108,3 +114,51 @@ function appendPins() {
 }
 
 appendPins();
+
+const cardTemplate = document.querySelector(`#card`);
+const firstOffer = offerObjectsArr[0];
+
+function createCardElement() {
+  const cardElement = cardTemplate.content.cloneNode(true);
+  const offerTitle = cardElement.querySelector(`.popup__title`);
+  const offerAddress = cardElement.querySelector(`.popup__text--address`);
+  const offerPrice = cardElement.querySelector(`.popup__text--price`);
+  const offerType = cardElement.querySelector(`.popup__type`);
+  const offerTextCapacity = cardElement.querySelector(`.popup__text--capacity`);
+  const offerTextTime = cardElement.querySelector(`.popup__text--time`);
+  const offerFeaturesList = cardElement.querySelector(`.popup__features`);
+  const offerDescription = cardElement.querySelector(`.popup__description`);
+  const offerPhotosList = cardElement.querySelector(`.popup__photos`);
+  const offerAvatar = cardElement.querySelector(`.popup__avatar`);
+
+  offerTitle.textContent = firstOffer.offer.title;
+  offerAddress.textContent = firstOffer.offer.address;
+  offerPrice.textContent = `${firstOffer.offer.price}₽/ночь`;
+  offerType.textContent = TYPES[firstOffer.offer.type];
+  offerTextCapacity.textContent = `${firstOffer.offer.rooms} комнаты для ${firstOffer.offer.guests} гостей`;
+  offerTextTime.textContent = `Заезд после ${firstOffer.offer.checkin}, выезд до ${firstOffer.offer.checkout}`;
+  offerDescription.textContent = firstOffer.offer.description;
+  offerAvatar.src = firstOffer.author.avatar;
+
+  offerFeaturesList.innerHTML = ``;
+  for (let i = 0; i < firstOffer.offer.features.length; i++) {
+    const item = document.createElement(`li`);
+    item.classList.add(`popup__feature`, `popup__feature--${firstOffer.offer.features[i]}`);
+    offerFeaturesList.appendChild(item);
+  }
+
+  offerPhotosList.innerHTML = ``;
+  for (let i = 0; i < firstOffer.offer.photos.length; i++) {
+    const img = document.createElement(`img`);
+    img.classList.add(`popup__photo`);
+    img.width = 45;
+    img.height = 40;
+    img.alt = `Фотография жилья`;
+    img.src = firstOffer.offer.photos[i];
+    offerPhotosList.appendChild(img);
+  }
+
+  return cardElement;
+}
+
+map.insertBefore(createCardElement(), mapFilters);
