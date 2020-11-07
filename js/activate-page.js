@@ -10,6 +10,7 @@
   const setAddress = window.form.setAddress;
   const addAttribute = window.utils.addAttribute;
   const removeAttribute = window.utils.removeAttribute;
+  const mainPinMove = window.map.mainPinMove;
 
   function disabledPage() {
     map.classList.add(`map--faded`);
@@ -32,6 +33,8 @@
     mapPinMain.removeEventListener(`keydown`, clickStartPage);
 
     setAddress(true);
+
+    mapPinMain.addEventListener(`mousedown`, mainPinMove);
   }
 
   function clickStartPage(evt) {
