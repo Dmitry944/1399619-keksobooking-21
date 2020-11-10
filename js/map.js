@@ -9,7 +9,6 @@
   const mapPinMain = window.elements.mapPinMain;
   const mapFilters = window.elements.mapFilters;
   const createCardElement = window.card.createCardElement;
-  const offerObjectsArr = window.data.createOffersArray();
   const setAddress = window.form.setAddress;
 
   const Coordinates = {
@@ -23,7 +22,7 @@
     }
   };
 
-  function appendPins() {
+  function appendPins(offerObjectsArr) {
     const offerObject = document.createDocumentFragment();
 
     for (let i = 0; i < offerObjectsArr.length; i++) {
@@ -33,14 +32,21 @@
     mapPins.appendChild(offerObject);
   }
 
+  function removePins() {
+    const pins = map.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  }
+
   function pinClickHandler(evt) {
     if (evt.target.classList.contains(`map__pin`) && !evt.target.classList.contains(`map__pin--main`)) {
       closeCard();
-      openCard(createCardElement(offerObjectsArr[evt.target.dataset.id]));
+      openCard(createCardElement(window.offers[evt.target.dataset.id]));
       evt.target.classList.add(`map__pin--active`);
     } else if (evt.target.parentElement.classList.contains(`map__pin`) && !evt.target.parentElement.classList.contains(`map__pin--main`)) {
       closeCard();
-      openCard(createCardElement(offerObjectsArr[evt.target.parentElement.dataset.id]));
+      openCard(createCardElement(window.offers[evt.target.parentElement.dataset.id]));
       evt.target.parentElement.classList.add(`map__pin--active`);
     }
   }
@@ -129,7 +135,8 @@
   window.map = {
     appendPins,
     pinClickHandler,
-    mainPinMove
+    mainPinMove,
+    removePins
   };
 
 })();

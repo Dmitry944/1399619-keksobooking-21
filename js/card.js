@@ -48,7 +48,16 @@
     return cardElement;
   }
 
+  //   const form = window.elements.adForm;
+  // form.addEventListener('submit', function (evt) {
+  //   window.upload(new FormData(form), function () {
+  //     window.activate-page.disabledPage();
+  //   });
+  //   evt.preventDefault();
+  // });
+
   window.card = {
     createCardElement
   };
+
 })();
