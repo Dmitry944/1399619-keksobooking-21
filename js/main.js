@@ -2,13 +2,25 @@
 
 (function () {
   const map = window.elements.map;
-  const mapPinMain = window.elements.mapPinMain;
-  const clickStartPage = window.activatePage.clickStartPage;
+  const showSuccessMessage = window.form.showSuccessMessage;
+  const showErrorMessage = window.form.showErrorMessage;
+  const disablePage = window.activatePage.disablePage;
+  const upload = window.load.upload;
+  const adForm = window.elements.adForm;
+  const adFormReset = window.elements.adFormReset;
 
-  window.activatePage.disabledPage();
-
-  mapPinMain.addEventListener(`mousedown`, clickStartPage);
-  mapPinMain.addEventListener(`keydown`, clickStartPage);
+  disablePage();
 
   map.addEventListener(`click`, window.map.pinClickHandler);
+
+  adFormReset.addEventListener(`click`, disablePage);
+
+  adForm.addEventListener(`submit`, function (evt) {
+    evt.preventDefault();
+    upload(new FormData(adForm), function () {
+      adForm.reset();
+      disablePage();
+      showSuccessMessage();
+    }, showErrorMessage);
+  });
 })();
