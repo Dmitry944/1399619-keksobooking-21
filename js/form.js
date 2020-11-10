@@ -5,7 +5,9 @@
   const MIN_TITLE_LENGTH = window.consts.MIN_TITLE_LENGTH;
   const MAX_TITLE_LENGTH = window.consts.MAX_TITLE_LENGTH;
   const MAX_PRICE = window.consts.MAX_PRICE;
+  const ESC_KEY = window.consts.ESC_KEY;
 
+  const main = window.elements.main;
   const adForm = window.elements.adForm;
   const addressForm = window.elements.addressForm;
   const titleForm = window.elements.titleForm;
@@ -18,6 +20,8 @@
   const imagesInputForm = window.elements.imagesInputForm;
   const typeForm = window.elements.typeForm;
   const mapPinMain = window.elements.mapPinMain;
+  const successMessage = window.elements.successMessage;
+  const errorMessage = window.elements.errorMessage;
 
   let typeOfHouse = `flat`;
 
@@ -141,7 +145,67 @@
     timeInForm.value = evt.target.value;
   });
 
+  function showSuccessMessage() {
+    const message = successMessage.content.cloneNode(true);
+
+    document.addEventListener(`click`, deleteSuccessMessage);
+    document.addEventListener(`keydown`, deleteSuccessMessageByEsc);
+
+    main.appendChild(message);
+  }
+
+  function deleteSuccessMessage(evt) {
+    evt.preventDefault();
+
+    const message = main.querySelector(`.success`);
+
+    document.removeEventListener(`click`, deleteSuccessMessage);
+    document.removeEventListener(`keydown`, deleteSuccessMessageByEsc);
+
+    main.removeChild(message);
+  }
+
+  function deleteSuccessMessageByEsc(evt) {
+    if (evt.key === ESC_KEY) {
+      deleteSuccessMessage(evt);
+    }
+  }
+
+  function showErrorMessage() {
+    const message = errorMessage.content.cloneNode(true);
+    const closeButton = message.querySelector(`.error__button`);
+
+    document.addEventListener(`click`, deleteErrorMessage);
+    document.addEventListener(`keydown`, deleteErrorMessageByEsc);
+
+    closeButton.addEventListener(`click`, deleteErrorMessage);
+
+    main.appendChild(message);
+  }
+
+  function deleteErrorMessage(evt) {
+    evt.preventDefault();
+
+    const message = main.querySelector(`.success`);
+    const closeButton = message.querySelector(`.error__button`);
+
+    document.removeEventListener(`click`, deleteErrorMessage);
+    document.removeEventListener(`keydown`, deleteErrorMessageByEsc);
+
+    closeButton.removeEventListener(`click`, deleteErrorMessage);
+
+    main.removeChild(message);
+  }
+
+  function deleteErrorMessageByEsc(evt) {
+    if (evt.key === ESC_KEY) {
+      deleteErrorMessage(evt);
+    }
+  }
+
   window.form = {
-    setAddress
+    setAddress,
+    showSuccessMessage,
+    showErrorMessage
   };
 })();

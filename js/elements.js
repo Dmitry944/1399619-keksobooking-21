@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  const main = document.querySelector(`main`);
   const map = document.querySelector(`.map`);
   const mapPins = document.querySelector(`.map__pins`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
@@ -18,8 +19,12 @@
   const imagesInputForm = adForm.querySelector(`#images`);
   const mapFilters = document.querySelector(`.map__filters-container`);
   const mapFiltersElements = mapFilters.querySelectorAll(`.map__filter, .map__features`);
+  const successMessage = document.querySelector(`#success`);
+  const errorMessage = document.querySelector(`#error`);
+  const adFormReset = adForm.querySelector(`.ad-form__reset`);
 
   window.elements = {
+    main,
     map,
     mapPins,
     mapPinMain,
@@ -36,6 +41,9 @@
     avatarInputForm,
     imagesInputForm,
     mapFilters,
-    mapFiltersElements
+    mapFiltersElements,
+    successMessage,
+    errorMessage,
+    adFormReset
   };
 })();

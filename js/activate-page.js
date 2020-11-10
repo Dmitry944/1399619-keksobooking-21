@@ -2,6 +2,7 @@
 
 (function () {
   const ENTER_KEY = window.consts.ENTER_KEY;
+
   const map = window.elements.map;
   const mapPinMain = window.elements.mapPinMain;
   const adForm = window.elements.adForm;
@@ -11,22 +12,30 @@
   const addAttribute = window.utils.addAttribute;
   const removeAttribute = window.utils.removeAttribute;
   const mainPinMove = window.map.mainPinMove;
-  const upload = window.load.upload;
+  const load = window.load.load;
   const appendPins = window.map.appendPins;
   const removePins = window.map.removePins;
 
-  function disabledPage() {
+  function disablePage() {
     map.classList.add(`map--faded`);
     adForm.classList.add(`ad-form--disabled`);
     addAttribute(adFormElements, `disabled`);
     addAttribute(mapFiltersElements, `disabled`);
     removePins();
 
+    const card = document.querySelector(`.map__card`);
+    if (card) {
+      card.remove();
+    }
+
     setAddress(false);
+
+    mapPinMain.addEventListener(`mousedown`, clickStartPage);
+    mapPinMain.addEventListener(`keydown`, clickStartPage);
   }
 
   function activatePage() {
-    upload(appendPins, errorHandler);
+    load(appendPins, errorHandler);
 
     map.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
@@ -64,7 +73,6 @@
   };
 
   window.activatePage = {
-    disabledPage,
-    clickStartPage
+    disablePage
   };
 })();
