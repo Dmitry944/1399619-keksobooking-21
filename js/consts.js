@@ -16,6 +16,7 @@
   const MIN_TITLE_LENGTH = 30;
   const MAX_TITLE_LENGTH = 100;
   const MAX_PRICE = 1000000;
+  const MAX_PINS = 5;
 
   window.consts = {
     TYPES,
@@ -26,6 +27,7 @@
     MAIN_PIN_ARROW,
     MIN_TITLE_LENGTH,
     MAX_TITLE_LENGTH,
-    MAX_PRICE
+    MAX_PRICE,
+    MAX_PINS
   };
 })();
