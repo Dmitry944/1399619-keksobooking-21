@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  const MAX_PINS = window.consts.MAX_PINS;
   const URLS = {
     DATA: `https://21.javascript.pages.academy/keksobooking/data`,
     UPLOAD: `https://21.javascript.pages.academy/keksobooking`
@@ -22,8 +23,9 @@
 
     xhr.addEventListener(`load`, function () {
       if (xhr.status === StatusCode.OK) {
-        onSuccess(xhr.response);
         window.offers = xhr.response;
+        window.sortedOffers = xhr.response.slice(0, MAX_PINS);
+        onSuccess(window.sortedOffers);
       } else {
         onError(`Статус ответа: ${xhr.status} ${xhr.statusText}`);
       }

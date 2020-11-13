@@ -42,11 +42,11 @@
   function pinClickHandler(evt) {
     if (evt.target.classList.contains(`map__pin`) && !evt.target.classList.contains(`map__pin--main`)) {
       closeCard();
-      openCard(createCardElement(window.offers[evt.target.dataset.id]));
+      openCard(createCardElement(window.sortedOffers[evt.target.dataset.id]));
       evt.target.classList.add(`map__pin--active`);
     } else if (evt.target.parentElement.classList.contains(`map__pin`) && !evt.target.parentElement.classList.contains(`map__pin--main`)) {
       closeCard();
-      openCard(createCardElement(window.offers[evt.target.parentElement.dataset.id]));
+      openCard(createCardElement(window.sortedOffers[evt.target.parentElement.dataset.id]));
       evt.target.parentElement.classList.add(`map__pin--active`);
     }
   }
@@ -136,6 +136,7 @@
     appendPins,
     pinClickHandler,
     mainPinMove,
+    closeCard,
     removePins
   };
 

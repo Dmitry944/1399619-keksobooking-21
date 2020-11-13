@@ -17,11 +17,14 @@
   const timeOutForm = adForm.querySelector(`#timeout`);
   const avatarInputForm = adForm.querySelector(`#avatar`);
   const imagesInputForm = adForm.querySelector(`#images`);
+  const mapFiltersForm = document.querySelector(`.map__filters`);
+  const typeFilter = mapFiltersForm.querySelector(`#housing-type`);
   const mapFilters = document.querySelector(`.map__filters-container`);
   const mapFiltersElements = mapFilters.querySelectorAll(`.map__filter, .map__features`);
   const successMessage = document.querySelector(`#success`);
   const errorMessage = document.querySelector(`#error`);
   const adFormReset = adForm.querySelector(`.ad-form__reset`);
+
 
   window.elements = {
     main,
@@ -44,6 +47,8 @@
     mapFiltersElements,
     successMessage,
     errorMessage,
-    adFormReset
+    adFormReset,
+    mapFiltersForm,
+    typeFilter
   };
 })();
