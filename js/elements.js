@@ -19,6 +19,9 @@
   const imagesInputForm = adForm.querySelector(`#images`);
   const mapFiltersForm = document.querySelector(`.map__filters`);
   const typeFilter = mapFiltersForm.querySelector(`#housing-type`);
+  const priceFilter = mapFiltersForm.querySelector(`#housing-price`);
+  const roomsFilter = mapFiltersForm.querySelector(`#housing-rooms`);
+  const guestsFilter = mapFiltersForm.querySelector(`#housing-guests`);
   const mapFilters = document.querySelector(`.map__filters-container`);
   const mapFiltersElements = mapFilters.querySelectorAll(`.map__filter, .map__features`);
   const successMessage = document.querySelector(`#success`);
@@ -49,6 +52,9 @@
     errorMessage,
     adFormReset,
     mapFiltersForm,
-    typeFilter
+    typeFilter,
+    priceFilter,
+    roomsFilter,
+    guestsFilter
   };
 })();
