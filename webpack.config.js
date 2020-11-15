@@ -4,8 +4,9 @@ module.exports = {
   entry: [
     "./js/consts.js",
     "./js/elements.js",
+    "./js/avatar.js",
     "./js/debounce.js",
-    "./js/load.js",
+    "./js/backend.js",
     "./js/utils.js",
     "./js/form.js",
     "./js/pin.js",

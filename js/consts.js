@@ -20,6 +20,9 @@ const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 1000000;
 const MAX_PINS = 5;
 const DEBOUNCE_INTERVAL = 500;
+const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
+const PHOTO_SIZE = 70;
+const PHOTO_ALT = `Фоторафия жилья`;
 
 window.consts = {
   TYPES,
@@ -34,5 +37,8 @@ window.consts = {
   MAX_PINS,
   DEBOUNCE_INTERVAL,
   LOW_PRICE,
-  HIGH_PRICE
+  HIGH_PRICE,
+  FILE_TYPES,
+  PHOTO_SIZE,
+  PHOTO_ALT
 };

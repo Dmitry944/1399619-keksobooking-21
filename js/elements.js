@@ -26,6 +26,10 @@ const mapFiltersElements = mapFilters.querySelectorAll(`.map__filter, .map__feat
 const successMessage = document.querySelector(`#success`);
 const errorMessage = document.querySelector(`#error`);
 const adFormReset = adForm.querySelector(`.ad-form__reset`);
+const avatarChooser = document.querySelector(`.ad-form__field input[type=file]`);
+const avatarPreview = document.querySelector(`.ad-form-header__preview img`);
+const photoChooser = document.querySelector(`.ad-form__upload input[type=file]`);
+const photoPreview = document.querySelector(`.ad-form__photo`);
 
 
 window.elements = {
@@ -54,5 +58,9 @@ window.elements = {
   typeFilter,
   priceFilter,
   roomsFilter,
-  guestsFilter
+  guestsFilter,
+  avatarChooser,
+  avatarPreview,
+  photoChooser,
+  photoPreview
 };

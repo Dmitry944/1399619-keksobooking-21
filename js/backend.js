@@ -14,13 +14,12 @@ const StatusCode = {
   OK: 200
 };
 
-
-function load(onSuccess, onError) {
+const load = (onSuccess, onError) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = `json`;
   xhr.timeout = TIMEOUT;
 
-  xhr.addEventListener(`load`, function () {
+  xhr.addEventListener(`load`, () => {
     if (xhr.status === StatusCode.OK) {
       window.offers = xhr.response;
       window.sortedOffers = xhr.response.slice(0, MAX_PINS);
@@ -30,22 +29,22 @@ function load(onSuccess, onError) {
     }
   });
 
-  xhr.addEventListener(`error`, function () {
+  xhr.addEventListener(`error`, () => {
     onError(`Произошла ошибка соединения`);
   });
-  xhr.addEventListener(`timeout`, function () {
+  xhr.addEventListener(`timeout`, () => {
     onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
   });
 
   xhr.open(Methods.GET, URLS.DATA);
   xhr.send();
-}
+};
 
-function upload(data, onSuccess, onError) {
+const upload = (data, onSuccess, onError) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = `json`;
 
-  xhr.addEventListener(`load`, function () {
+  xhr.addEventListener(`load`, () => {
     if (xhr.status === StatusCode.OK) {
       onSuccess();
     } else {
@@ -53,18 +52,15 @@ function upload(data, onSuccess, onError) {
     }
   });
 
-  xhr.addEventListener(`error`, function () {
-    onError();
-  });
-  xhr.addEventListener(`timeout`, function () {
-    onError();
-  });
+  xhr.addEventListener(`error`, onError);
+
+  xhr.addEventListener(`timeout`, onError);
 
   xhr.open(Methods.POST, URLS.UPLOAD);
   xhr.send(data);
-}
+};
 
-window.load = {
+window.backend = {
   load,
   upload
 };

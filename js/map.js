@@ -7,7 +7,7 @@ const map = window.elements.map;
 const mapPins = window.elements.mapPins;
 const mapPinMain = window.elements.mapPinMain;
 const mapFilters = window.elements.mapFilters;
-const createCardElement = window.card.createCardElement;
+const createCardElement = window.card.createElement;
 const setAddress = window.form.setAddress;
 
 const Coordinates = {
@@ -21,67 +21,67 @@ const Coordinates = {
   }
 };
 
-function appendPins(offerObjectsArr) {
+const appendPins = (offerObjectsArr) => {
   const offerObject = document.createDocumentFragment();
 
   for (let i = 0; i < offerObjectsArr.length; i++) {
-    offerObject.appendChild(window.pin.createPinElement(offerObjectsArr[i], i));
+    offerObject.appendChild(window.pin.createElement(offerObjectsArr[i], i));
   }
 
   mapPins.appendChild(offerObject);
-}
+};
 
-function removePins() {
+const removePins = () => {
   const pins = map.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-  pins.forEach(function (pin) {
+  pins.forEach((pin) => {
     pin.remove();
   });
-}
+};
 
-function pinClickHandler(evt) {
+const onPinClick = (evt) => {
   if (evt.target.classList.contains(`map__pin`) && !evt.target.classList.contains(`map__pin--main`)) {
-    closeCard();
+    onCloseCard();
     openCard(createCardElement(window.sortedOffers[evt.target.dataset.id]));
     evt.target.classList.add(`map__pin--active`);
   } else if (evt.target.parentElement.classList.contains(`map__pin`) && !evt.target.parentElement.classList.contains(`map__pin--main`)) {
-    closeCard();
+    onCloseCard();
     openCard(createCardElement(window.sortedOffers[evt.target.parentElement.dataset.id]));
     evt.target.parentElement.classList.add(`map__pin--active`);
   }
-}
+};
 
-function openCard(cardElement) {
+const openCard = (cardElement) => {
   const closeButton = cardElement.querySelector(`.popup__close`);
-  closeButton.addEventListener(`click`, closeCard);
-  document.addEventListener(`keydown`, closeCardByEsc);
+  closeButton.addEventListener(`click`, onCloseCard);
+  document.addEventListener(`keydown`, onCloseCardByEsc);
 
   map.insertBefore(cardElement, mapFilters);
-}
+};
 
-function closeCard() {
+const onCloseCard = () => {
   const mapCard = map.querySelector(`.map__card`);
   const activePin = map.querySelector(`.map__pin--active`);
 
   if (mapCard) {
     const closeButton = mapCard.querySelector(`.popup__close`);
-    closeButton.removeEventListener(`click`, closeCard);
-    document.removeEventListener(`keydown`, closeCardByEsc);
+    closeButton.removeEventListener(`click`, onCloseCard);
+    document.removeEventListener(`keydown`, onCloseCardByEsc);
     mapCard.remove();
   }
 
   if (activePin) {
     activePin.classList.remove(`map__pin--active`);
   }
-}
+};
 
-function closeCardByEsc(evt) {
+const onCloseCardByEsc = (evt) => {
   if (evt.key === ESC_KEY) {
     evt.preventDefault();
-    closeCard();
+    onCloseCard();
   }
-}
+};
 
-function mainPinMove(evt) {
+const onMainPinMove = (evt) => {
   evt.preventDefault();
 
   let startCoords = {
@@ -89,7 +89,7 @@ function mainPinMove(evt) {
     y: evt.clientY
   };
 
-  const onMouseMove = function (moveEvt) {
+  const onMouseMove = (moveEvt) => {
     moveEvt.preventDefault();
 
     const shift = {
@@ -105,10 +105,10 @@ function mainPinMove(evt) {
     mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + `px`;
     mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + `px`;
 
-    if (mapPinMain.offsetLeft < Coordinates.x.min - mapPinMain.offsetWidth / 2) {
-      mapPinMain.style.left = (Coordinates.x.min - mapPinMain.offsetWidth / 2) + `px`;
-    } else if (mapPinMain.offsetLeft > Coordinates.x.max - mapPinMain.offsetWidth / 2) {
-      mapPinMain.style.left = (Coordinates.x.max - mapPinMain.offsetWidth / 2) + `px`;
+    if (mapPinMain.offsetLeft < Coordinates.x.min - Math.round(mapPinMain.offsetWidth / 2)) {
+      mapPinMain.style.left = (Coordinates.x.min - Math.round(mapPinMain.offsetWidth / 2)) + `px`;
+    } else if (mapPinMain.offsetLeft > Coordinates.x.max - Math.round(mapPinMain.offsetWidth) / 2) {
+      mapPinMain.style.left = (Coordinates.x.max - Math.round(mapPinMain.offsetWidth / 2)) + `px`;
     }
 
     if (mapPinMain.offsetTop < Coordinates.y.min - mapPinMain.offsetHeight - MAIN_PIN_ARROW) {
@@ -120,7 +120,7 @@ function mainPinMove(evt) {
     setAddress(true);
   };
 
-  const onMouseUp = function (upEvt) {
+  const onMouseUp = (upEvt) => {
     upEvt.preventDefault();
 
     document.removeEventListener(`mousemove`, onMouseMove);
@@ -129,13 +129,12 @@ function mainPinMove(evt) {
 
   document.addEventListener(`mousemove`, onMouseMove);
   document.addEventListener(`mouseup`, onMouseUp);
-}
+};
 
 window.map = {
   appendPins,
-  pinClickHandler,
-  mainPinMove,
-  closeCard,
+  onPinClick,
+  onMainPinMove,
+  onCloseCard,
   removePins
 };
-
