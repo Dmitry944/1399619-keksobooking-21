@@ -4,7 +4,7 @@ const TYPES = window.consts.TYPES;
 
 const cardTemplate = document.querySelector(`#card`);
 
-function createCardElement(offerObject) {
+const createElement = (offerObject) => {
   const cardElement = cardTemplate.content.cloneNode(true);
   const offerTitle = cardElement.querySelector(`.popup__title`);
   const offerAddress = cardElement.querySelector(`.popup__text--address`);
@@ -27,26 +27,26 @@ function createCardElement(offerObject) {
   offerAvatar.src = offerObject.author.avatar;
 
   offerFeaturesList.innerHTML = ``;
-  for (let i = 0; i < offerObject.offer.features.length; i++) {
+  offerObject.offer.features.forEach((feature) => {
     const item = document.createElement(`li`);
-    item.classList.add(`popup__feature`, `popup__feature--${offerObject.offer.features[i]}`);
+    item.classList.add(`popup__feature`, `popup__feature--${feature}`);
     offerFeaturesList.appendChild(item);
-  }
+  });
 
   offerPhotosList.innerHTML = ``;
-  for (let i = 0; i < offerObject.offer.photos.length; i++) {
+  offerObject.offer.photos.forEach((photo) => {
     const img = document.createElement(`img`);
     img.classList.add(`popup__photo`);
     img.width = 45;
     img.height = 40;
     img.alt = `Фотография жилья`;
-    img.src = offerObject.offer.photos[i];
+    img.src = photo;
     offerPhotosList.appendChild(img);
-  }
+  });
 
   return cardElement;
-}
+};
 
 window.card = {
-  createCardElement
+  createElement
 };

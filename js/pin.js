@@ -5,7 +5,7 @@ const OFFSET_X = window.consts.OFFSET_X;
 
 const pinTemplate = document.querySelector(`#pin`);
 
-function createPinElement(offerObject, index) {
+const createElement = (offerObject, index) => {
   const pinElement = pinTemplate.content.cloneNode(true);
   const mapPin = pinElement.querySelector(`.map__pin`);
   mapPin.dataset.id = index;
@@ -17,8 +17,8 @@ function createPinElement(offerObject, index) {
   mapPinImg.src = offerObject.author.avatar;
 
   return pinElement;
-}
+};
 
 window.pin = {
-  createPinElement
+  createElement
 };

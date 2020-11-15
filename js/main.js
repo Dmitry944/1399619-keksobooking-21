@@ -4,19 +4,19 @@ const map = window.elements.map;
 const showSuccessMessage = window.form.showSuccessMessage;
 const showErrorMessage = window.form.showErrorMessage;
 const disablePage = window.activatePage.disablePage;
-const upload = window.load.upload;
+const upload = window.backend.upload;
 const adForm = window.elements.adForm;
 const adFormReset = window.elements.adFormReset;
 
 disablePage();
 
-map.addEventListener(`click`, window.map.pinClickHandler);
+map.addEventListener(`click`, window.map.onPinClick);
 
 adFormReset.addEventListener(`click`, disablePage);
 
-adForm.addEventListener(`submit`, function (evt) {
+adForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  upload(new FormData(adForm), function () {
+  upload(new FormData(adForm), () => {
     adForm.reset();
     disablePage();
     showSuccessMessage();

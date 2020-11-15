@@ -10,12 +10,13 @@ const mapFiltersElements = window.elements.mapFiltersElements;
 const setAddress = window.form.setAddress;
 const addAttribute = window.utils.addAttribute;
 const removeAttribute = window.utils.removeAttribute;
-const mainPinMove = window.map.mainPinMove;
-const load = window.load.load;
+const onMainPinMove = window.map.onMainPinMove;
+const load = window.backend.load;
 const appendPins = window.map.appendPins;
 const removePins = window.map.removePins;
+const resetPreviews = window.avatar.resetPreviews;
 
-function disablePage() {
+const disablePage = () => {
   map.classList.add(`map--faded`);
   adForm.classList.add(`ad-form--disabled`);
   addAttribute(adFormElements, `disabled`);
@@ -28,35 +29,36 @@ function disablePage() {
   }
 
   setAddress(false);
+  resetPreviews();
 
-  mapPinMain.addEventListener(`mousedown`, clickStartPage);
-  mapPinMain.addEventListener(`keydown`, clickStartPage);
-}
+  mapPinMain.addEventListener(`mousedown`, onClickStartPage);
+  mapPinMain.addEventListener(`keydown`, onClickStartPage);
+};
 
-function activatePage() {
-  load(appendPins, errorHandler);
+const activatePage = () => {
+  load(appendPins, onError);
 
   map.classList.remove(`map--faded`);
   adForm.classList.remove(`ad-form--disabled`);
   removeAttribute(adFormElements, `disabled`);
   removeAttribute(mapFiltersElements, `disabled`);
 
-  mapPinMain.removeEventListener(`mousedown`, clickStartPage);
-  mapPinMain.removeEventListener(`keydown`, clickStartPage);
+  mapPinMain.removeEventListener(`mousedown`, onClickStartPage);
+  mapPinMain.removeEventListener(`keydown`, onClickStartPage);
 
   setAddress(true);
 
-  mapPinMain.addEventListener(`mousedown`, mainPinMove);
-}
+  mapPinMain.addEventListener(`mousedown`, onMainPinMove);
+};
 
-function clickStartPage(evt) {
+const onClickStartPage = (evt) => {
   if (evt.button === 0 || evt.key === ENTER_KEY) {
     evt.preventDefault();
     activatePage();
   }
-}
+};
 
-const errorHandler = (errorMessage) => {
+const onError = (errorMessage) => {
   const node = document.createElement(`div`);
   node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: #f0f0ea; vertical-align: middle`;
   node.style.position = `absolute`;

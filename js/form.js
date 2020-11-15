@@ -54,19 +54,19 @@ avatarInputForm.setAttribute(`accept`, `image/*`);
 imagesInputForm.setAttribute(`accept`, `image/*`);
 adForm.action = `https://21.javascript.pages.academy/keksobooking`;
 
-function setAddress(isActive) {
+const setAddress = (isActive) => {
   const left = mapPinMain.offsetLeft;
   const top = mapPinMain.offsetTop;
   const width = mapPinMain.clientWidth;
   const height = mapPinMain.clientHeight;
 
-  const coordX = Math.round(left + width / 2);
+  const coordX = Math.round(left + Math.round(width / 2));
   const coordY = isActive ? Math.round(top + MAIN_PIN_ARROW + height) : Math.round(top + height / 2);
 
   addressForm.value = `${coordX}, ${coordY}`;
-}
+};
 
-titleForm.addEventListener(`input`, function (evt) {
+titleForm.addEventListener(`input`, (evt) => {
   const inputLength = evt.target.value.length;
 
   if (evt.target.validity.valueMissing) {
@@ -85,7 +85,7 @@ titleForm.addEventListener(`input`, function (evt) {
 
 priceForm.placeholder = typeOfPrice[typeOfHouse];
 
-function priceValidation(target) {
+const priceValidation = (target) => {
   const value = target.value;
 
   if (target.validity.valueMissing) {
@@ -99,22 +99,22 @@ function priceValidation(target) {
   }
 
   target.reportValidity();
-}
+};
 
-priceForm.addEventListener(`input`, function (evt) {
+priceForm.addEventListener(`input`, (evt) => {
   priceValidation(evt.target);
 });
 
-typeForm.addEventListener(`change`, function (evt) {
+typeForm.addEventListener(`change`, (evt) => {
   typeOfHouse = evt.target.value;
   priceForm.placeholder = typeOfPrice[evt.target.value];
 
   priceValidation(priceForm);
 });
 
-function roomsValidation(target) {
+const roomsValidation = (target) => {
   const value = target.value;
-  const isValid = roomsOfGuests[typeOfRoom].some(function (elem) {
+  const isValid = roomsOfGuests[typeOfRoom].some((elem) => {
     return elem === value;
   });
   if (!isValid) {
@@ -124,83 +124,83 @@ function roomsValidation(target) {
   }
 
   target.reportValidity();
-}
+};
 
-roomNumberForm.addEventListener(`change`, function (evt) {
+roomNumberForm.addEventListener(`change`, (evt) => {
   typeOfRoom = evt.target.value;
 
   roomsValidation(capacityForm);
 });
 
-capacityForm.addEventListener(`change`, function (evt) {
+capacityForm.addEventListener(`change`, (evt) => {
   roomsValidation(evt.target);
 });
 
-timeInForm.addEventListener(`change`, function (evt) {
+timeInForm.addEventListener(`change`, (evt) => {
   timeOutForm.value = evt.target.value;
 });
 
-timeOutForm.addEventListener(`change`, function (evt) {
+timeOutForm.addEventListener(`change`, (evt) => {
   timeInForm.value = evt.target.value;
 });
 
-function showSuccessMessage() {
+const showSuccessMessage = () => {
   const message = successMessage.content.cloneNode(true);
 
-  document.addEventListener(`click`, deleteSuccessMessage);
-  document.addEventListener(`keydown`, deleteSuccessMessageByEsc);
+  document.addEventListener(`click`, onDeleteSuccessMessage);
+  document.addEventListener(`keydown`, onDeleteSuccessMessageByEsc);
 
   main.appendChild(message);
-}
+};
 
-function deleteSuccessMessage(evt) {
+const onDeleteSuccessMessage = (evt) => {
   evt.preventDefault();
 
   const message = main.querySelector(`.success`);
 
-  document.removeEventListener(`click`, deleteSuccessMessage);
-  document.removeEventListener(`keydown`, deleteSuccessMessageByEsc);
+  document.removeEventListener(`click`, onDeleteSuccessMessage);
+  document.removeEventListener(`keydown`, onDeleteSuccessMessageByEsc);
 
   main.removeChild(message);
-}
+};
 
-function deleteSuccessMessageByEsc(evt) {
+const onDeleteSuccessMessageByEsc = (evt) => {
   if (evt.key === ESC_KEY) {
-    deleteSuccessMessage(evt);
+    onDeleteSuccessMessage(evt);
   }
-}
+};
 
-function showErrorMessage() {
+const showErrorMessage = () => {
   const message = errorMessage.content.cloneNode(true);
   const closeButton = message.querySelector(`.error__button`);
 
-  document.addEventListener(`click`, deleteErrorMessage);
-  document.addEventListener(`keydown`, deleteErrorMessageByEsc);
+  document.addEventListener(`click`, onDeleteErrorMessage);
+  document.addEventListener(`keydown`, onDeleteErrorMessageByEsc);
 
-  closeButton.addEventListener(`click`, deleteErrorMessage);
+  closeButton.addEventListener(`click`, onDeleteErrorMessage);
 
   main.appendChild(message);
-}
+};
 
-function deleteErrorMessage(evt) {
+const onDeleteErrorMessage = (evt) => {
   evt.preventDefault();
 
   const message = main.querySelector(`.success`);
   const closeButton = message.querySelector(`.error__button`);
 
-  document.removeEventListener(`click`, deleteErrorMessage);
-  document.removeEventListener(`keydown`, deleteErrorMessageByEsc);
+  document.removeEventListener(`click`, onDeleteErrorMessage);
+  document.removeEventListener(`keydown`, onDeleteErrorMessageByEsc);
 
-  closeButton.removeEventListener(`click`, deleteErrorMessage);
+  closeButton.removeEventListener(`click`, onDeleteErrorMessage);
 
   main.removeChild(message);
-}
+};
 
-function deleteErrorMessageByEsc(evt) {
+const onDeleteErrorMessageByEsc = (evt) => {
   if (evt.key === ESC_KEY) {
-    deleteErrorMessage(evt);
+    onDeleteErrorMessage(evt);
   }
-}
+};
 
 window.form = {
   setAddress,
