@@ -17,7 +17,6 @@ adFormReset.addEventListener(`click`, disablePage);
 adForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
   upload(new FormData(adForm), () => {
-    adForm.reset();
     disablePage();
     showSuccessMessage();
   }, showErrorMessage);

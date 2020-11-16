@@ -15,6 +15,7 @@ const load = window.backend.load;
 const appendPins = window.map.appendPins;
 const removePins = window.map.removePins;
 const resetPreviews = window.avatar.resetPreviews;
+const mapFiltersForm = window.elements.mapFiltersForm;
 
 const disablePage = () => {
   map.classList.add(`map--faded`);
@@ -22,13 +23,15 @@ const disablePage = () => {
   addAttribute(adFormElements, `disabled`);
   addAttribute(mapFiltersElements, `disabled`);
   removePins();
+  adForm.reset();
+  mapFiltersForm.reset();
 
   const card = document.querySelector(`.map__card`);
   if (card) {
     card.remove();
   }
 
-  setAddress(false);
+  setAddress(false, true);
   resetPreviews();
 
   mapPinMain.addEventListener(`mousedown`, onClickStartPage);

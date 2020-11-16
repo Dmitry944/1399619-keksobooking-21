@@ -21,6 +21,8 @@ const typeForm = window.elements.typeForm;
 const mapPinMain = window.elements.mapPinMain;
 const successMessage = window.elements.successMessage;
 const errorMessage = window.elements.errorMessage;
+const mapPinInitialLeft = mapPinMain.offsetLeft;
+const mapPinInitialTop = mapPinMain.offsetTop;
 
 let typeOfHouse = `flat`;
 
@@ -54,7 +56,11 @@ avatarInputForm.setAttribute(`accept`, `image/*`);
 imagesInputForm.setAttribute(`accept`, `image/*`);
 adForm.action = `https://21.javascript.pages.academy/keksobooking`;
 
-const setAddress = (isActive) => {
+const setAddress = (isActive, isReseted) => {
+  if (isReseted) {
+    mapPinMain.style.left = `${mapPinInitialLeft}px`;
+    mapPinMain.style.top = `${mapPinInitialTop}px`;
+  }
   const left = mapPinMain.offsetLeft;
   const top = mapPinMain.offsetTop;
   const width = mapPinMain.clientWidth;
@@ -185,7 +191,7 @@ const showErrorMessage = () => {
 const onDeleteErrorMessage = (evt) => {
   evt.preventDefault();
 
-  const message = main.querySelector(`.success`);
+  const message = main.querySelector(`.error`);
   const closeButton = message.querySelector(`.error__button`);
 
   document.removeEventListener(`click`, onDeleteErrorMessage);
