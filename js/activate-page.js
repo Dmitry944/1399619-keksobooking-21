@@ -17,7 +17,10 @@ const removePins = window.map.removePins;
 const resetPreviews = window.avatar.resetPreviews;
 const mapFiltersForm = window.elements.mapFiltersForm;
 
-const disablePage = () => {
+const disablePage = (evt) => {
+  if (evt) {
+    evt.preventDefault();
+  }
   map.classList.add(`map--faded`);
   adForm.classList.add(`ad-form--disabled`);
   addAttribute(adFormElements, `disabled`);
