@@ -50,19 +50,21 @@ const checkFeatures = (offer) => {
   });
 };
 
-const getAmountOffers = (offers) => {
-  const sortedOffers = offers.slice(0, MAX_PINS);
-  window.sortedOffers = sortedOffers;
-
-  return sortedOffers;
-};
-
 const updateFilters = (offers) => {
-  const filteredOffers = offers.filter((offer) => {
-    return checkType(offer) && checkPrice(offer) && checkRooms(offer) && checkGuests(offer) && checkFeatures(offer);
-  });
+  const filteredOffers = [];
 
-  return getAmountOffers(filteredOffers);
+  for (let i = 0; i < offers.length; i++) {
+    if (filteredOffers.length === MAX_PINS) {
+      break;
+    }
+    if (checkType(offers[i]) && checkPrice(offers[i]) && checkRooms(offers[i]) && checkGuests(offers[i]) && checkFeatures(offers[i])) {
+      filteredOffers.push(offers[i]);
+    }
+  }
+
+  window.sortedOffers = filteredOffers;
+
+  return filteredOffers;
 };
 
 mapFiltersForm.addEventListener(`change`, () => {
